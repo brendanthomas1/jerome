@@ -7,13 +7,11 @@ module Jerome
 
   class << self
     def dictionary
-      [
-        { left: 'dog', right: 'cane' },
-        { left: 'book', right: 'libro' },
-        { left: 'street', right: 'strada' },
-        { left: 'car', right: 'auto' },
-        { left: 'doctor', right: 'dottore' }
-      ]
+      @dictionary ||= []
+    end
+
+    def term(left, right)
+      dictionary << { left: left, right: right }
     end
 
     def translate!(left)

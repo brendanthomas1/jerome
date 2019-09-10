@@ -1,10 +1,6 @@
 # frozen_string_literal: true
 
 RSpec.describe Jerome do
-  before do
-    allow(Jerome).to receive(:dictionary).and_return dictionary
-  end
-
   let(:dictionary) do
     [
       { left: 'street', right: 'strada' }
@@ -12,6 +8,8 @@ RSpec.describe Jerome do
   end
 
   describe '.translate!' do
+    before { allow(Jerome).to receive(:dictionary).and_return dictionary }
+
     it 'returns the translated word' do
       expect(Jerome.translate!('street')).to eq 'strada'
     end
@@ -30,6 +28,8 @@ RSpec.describe Jerome do
   end
 
   describe '.reverse!' do
+    before { allow(Jerome).to receive(:dictionary).and_return dictionary }
+
     it 'returns the untranslated word' do
       expect(Jerome.reverse!('strada')).to eq 'street'
     end
@@ -38,6 +38,15 @@ RSpec.describe Jerome do
       it 'raises an error' do
         expect { Jerome.reverse! 'gobbledegook' }.to raise_error Jerome::NoTranslationError
       end
+    end
+  end
+
+  describe '.term' do
+    it 'adds a term to the dictionary' do
+      expect { Jerome.term 'dog', 'cane' }
+        .to change { Jerome.dictionary.include?(left: 'dog', right: 'cane') }
+        .from(false)
+        .to(true)
     end
   end
 
