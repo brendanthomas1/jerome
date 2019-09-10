@@ -37,7 +37,7 @@ module Jerome
     end
   end
 
-  def self.included(base)
-    base.extend(ClassMethods)
+  def self.included(klass)
+    klass.extend(ClassMethods)
   end
 end

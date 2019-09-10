@@ -1,11 +1,7 @@
 # frozen_string_literal: true
 
 RSpec.describe Jerome do
-  subject do
-    class TranslatorTest
-      include Jerome
-    end
-  end
+  subject { TestTranslator }
 
   let(:dictionary) do
     [
