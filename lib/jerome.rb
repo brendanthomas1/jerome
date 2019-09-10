@@ -1,4 +1,6 @@
-require "jerome/version"
+# frozen_string_literal: true
+
+require 'jerome/version'
 
 module Jerome
   class Error < StandardError; end
