@@ -5,7 +5,7 @@ require 'jerome/version'
 module Jerome
   class NoTranslationError < StandardError; end
 
-  class << self
+  module ClassMethods
     def dictionary
       @dictionary ||= []
     end
@@ -35,5 +35,9 @@ module Jerome
 
       translation[:left]
     end
+  end
+
+  def self.included(base)
+    base.extend(ClassMethods)
   end
 end
