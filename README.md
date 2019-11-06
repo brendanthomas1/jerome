@@ -22,7 +22,32 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+To use, just `include Jerome` in your translator class and then define `term`s!
+
+```ruby
+# Let's say we're some terrible social media app.
+# We show other users your relationship status because we're creepy.
+# We integrate with other terrible social media apps,
+# and get updates when your relationship status changes.
+# Our terrible social media app is closed-minded and thinks your relationship status
+# can only be one of "single", "dating", "engaged", "married".
+
+class RelationshipStatusTranslator
+  include Jerome
+  
+  term 'in a relationship', :dating
+  term 'divorced', :single
+  
+  # our translator says that if "it's complicated" there's some semblance of a relationship
+  term "it's complicated", :dating 
+  
+  # but one of the terrible social media apps we integrate with things that if "it's complicated", you're
+  # ready to mingle, because it's, you know, terrible.
+  context :kindling do
+    term "it's complicated", :single
+  end
+end
+```
 
 ## Development
 
