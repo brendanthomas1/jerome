@@ -2,6 +2,7 @@
 
 require 'bundler/setup'
 require 'jerome'
+require 'pry'
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
@@ -16,5 +17,11 @@ RSpec.configure do |config|
 
   class TestTranslator
     include Jerome
+
+    term 'street', 'strada'
+
+    context :italian do
+      term 'hi', 'ciao'
+    end
   end
 end

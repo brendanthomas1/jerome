@@ -3,15 +3,7 @@
 RSpec.describe Jerome do
   subject { TestTranslator }
 
-  let(:dictionary) do
-    [
-      { left: 'street', right: 'strada' }
-    ]
-  end
-
   describe '.translate!' do
-    before { allow(subject).to receive(:dictionary).and_return dictionary }
-
     it 'returns the translated word' do
       expect(subject.translate!('street')).to eq 'strada'
     end
@@ -30,8 +22,6 @@ RSpec.describe Jerome do
   end
 
   describe '.reverse!' do
-    before { allow(subject).to receive(:dictionary).and_return dictionary }
-
     it 'returns the untranslated word' do
       expect(subject.reverse!('strada')).to eq 'street'
     end
@@ -44,11 +34,21 @@ RSpec.describe Jerome do
   end
 
   describe '.term' do
-    it 'adds a term to the dictionary' do
+    it "adds a term to the default context's dictionary" do
+      default_context = subject.instance_variable_get(:@default_context)
+
       expect { subject.term 'dog', 'cane' }
-        .to change { subject.dictionary.include?(left: 'dog', right: 'cane') }
+        .to change { default_context.dictionary.include?(left: 'dog', right: 'cane') }
         .from(false)
         .to(true)
+    end
+  end
+
+  describe '.context' do
+    it 'creates a new context' do
+      expect { subject.context :french }
+        .to change { subject.instance_variable_get(:@contexts).count }
+        .by(1)
     end
   end
 
